@@ -103,12 +103,8 @@ def generate_art(generator_path, img_path):
 
     generated_img = generator_monet(img_array)
 
-    my_img  = squeeze_img(img_array)
-
-    gen_img = squeeze_img(generated_img)
-
-    my_img = de_normalize(my_img)
-    gen_img = de_normalize(gen_img)
+    my_img = de_normalize(img_array)
+    gen_img = de_normalize(generated_img)
 
     
     return my_img, gen_img 
@@ -127,23 +123,15 @@ def save_to_file(path, gen_img):
 # In[138]:
 
 
-print(str(sys.argv[1]))
+if __name__ == '__main__':
+	monet_gen_path = sys.argv[1] + '/'
+	img_path = sys.argv[2] + '/'
+	save_path = sys.argv[3] + '/'
+	my_img, gen_img = generate_art(monet_gen_path, img_path)
+
+	for epoch, image in enumerate(gen_img):
+		temp_path = save_path + '{}.png'.format(epoch)
+		save_to_file(temp_path, image)
 
 
-monet_gen_path = sys.argv[1]
-img_path = sys.argv[2]
-save_path = sys.argv[3]
-my_img, gen_img = generate_art(monet_gen_path, img_path)
-save_to_file(save_path, gen_img)
-
-
-
-    
-
-
-# In[ ]:
-
-
-# 'final_model/'
-# 'loading_folder/'
-# 'translated_imgs/first.png'
+   
