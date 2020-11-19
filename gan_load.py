@@ -13,11 +13,11 @@ from tensorflow.keras.preprocessing.image import load_img, img_to_array
 
 #loads the monet images and regular images as numpy array and returns them as attributes of the file_load object
 class file_load(object):
-    
+    #constructor
     def __init__(self):
         self.start = True
     
-    
+    # laod all images from from given path. Resize them to the desired dimensions, normalize the image array and return the image array
     def load_images(self, path, size=(256,256)):
         X_images = []
         for image in os.listdir(path):
@@ -27,6 +27,7 @@ class file_load(object):
         X_images = np.asarray(X_images)/255
         return X_images
     
+	# call the load_images function inside a GPU scope
     def get_img(self, path):
         with tf.device('/GPU:0'):
             img_array = self.load_images(path, (256,256))
